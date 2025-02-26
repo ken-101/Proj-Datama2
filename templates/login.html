@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <h2>Select Your Role</h2>
+    <form action="/another/login" method="POST">
+        <label for="role">Enter Role:</label>
+        <input type="text" name="role" required>
+        <button type="submit">Submit</button>
+    </form>
+    <h1>IMGES</h1>
+    <img style="display: block; width: 100px; height: 100px;" src="{{ url_for('static', filename='imgs/ramencat.jpg')}}" alt="">
+{% endblock %}
