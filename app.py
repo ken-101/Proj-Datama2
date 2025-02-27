@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import secrets
-from flask_sqlalchemy import SQLAlchemy
 from supabase import create_client
 
 from buyer.buyer import buyer 
@@ -20,9 +19,6 @@ supabase = create_client(Config.SUPABASE_URL, Config.SUPABASE_KEY)
 # Make Supabase client available to the app context
 app.supabase = supabase
 
-# Initialize SQLAlchemy
-db = SQLAlchemy(app)
-
 # Register blueprints
 app.register_blueprint(buyer, url_prefix="/buyer")
 app.register_blueprint(seller, url_prefix="/seller")
@@ -37,14 +33,14 @@ def landing():
 @app.route("/home")
 def home():
     if not session.get("user_id"):
-        return redirect(url_for("login.login"))
+        return render_template("landing.html")
     
     try:
         # Get user data from Supabase
         user = supabase.table('users').select('*').eq('user_id', session['user_id']).execute()
         if not user.data:
             session.clear()
-            return redirect(url_for("login.login"))
+            return redirect(url_for("auth.login"))
             
         user_role = user.data[0]['user_role']
         
@@ -59,7 +55,7 @@ def home():
     except Exception as e:
         print(f"Error: {str(e)}")
         session.clear()
-        return redirect(url_for("login.login"))
+        return render_template("landing.html")
 
 if __name__ == '__main__':
     app.run(debug=True)

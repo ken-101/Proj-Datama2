@@ -1,7 +1,7 @@
 from flask import Blueprint, redirect, render_template, request, session, url_for, current_app
 from werkzeug.security import check_password_hash, generate_password_hash
 
-auth = Blueprint("login", __name__, static_folder="static", template_folder="templates")
+auth = Blueprint("auth", __name__, static_folder="static", template_folder="templates")
 
 @auth.route("/", methods=["GET", "POST"])
 @auth.route("/login", methods=["GET", "POST"])
@@ -43,7 +43,7 @@ def login():
 @auth.route("/logout", methods=["POST"])
 def logout():
     session.clear()  # Clear all session data
-    return redirect(url_for("login.login"))  # Redirect to login page using correct blueprint endpoint
+    return redirect(url_for("home"))  # Redirect to home page
 
 @auth.route("/signup", methods=["GET", "POST"])
 def signup():
@@ -72,7 +72,7 @@ def signup():
             }).execute()
             
             if new_user.data:
-                return redirect(url_for('login.login'))
+                return redirect(url_for('auth.login'))
             else:
                 return render_template("signup.html", error="Failed to create account")
                 

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+{% block name %}{% endblock %}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
+<script src="{{url_for('static', filename='script.js')}}"></script>
+<nav class="navbar">
+    <div class="nav-right">
+        <form action="{{ url_for('auth.logout') }}" method="POST" style="display: inline;">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>
+</nav>
+{% endblock %}

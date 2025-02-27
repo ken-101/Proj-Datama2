@@ -1,8 +1,81 @@
-{% extends "base.html" %}
+{% extends "loggedin.html" %}
 
-{% block title %}Seller Page{% endblock %}
+{% block name %}
+{% block admin_content %}{% endblock %}
+    <div class="container">
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="image-container">
+                    <img src="https://i1.sndcdn.com/artworks-HSyITlQwovK4dbY8-iAauZg-t500x500.jpg" alt="Product Image">
+                </div>
+                <p class="product-id">Product ID: 001</p>
+                <h2>Product Name</h2>
+                <p class="brand">Product Brand</p>
+                <p class="price">Price: P 00.00</p>
+                <p class="description">Product Short Description</p>
+                <p class="status available">Available</p>
+                <div class="button-container">
+                    <button class="edit-button" onclick="openModal(this)">✏️ Edit Details</button>
+                    <button class="remove-btn" onclick="removeProduct(this)">Remove</button>
+                </div>
+            </div>
+        </div>
+        
+        <button onclick="openAddProductModal()">Add New Product</button>
+    </div>
 
-{% block content %}
-    <h1>Seller Panel</h1>
-    {% block admin_content %}{% endblock %}
+    <!-- Edit Modal -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <h2>Edit Product</h2>
+
+            <div class="form-group">
+                <label for="productId">Product ID:</label>
+                <input type="text" id="productId" placeholder="Product ID">
+            </div>
+
+            <div class="form-group">
+                <label for="productName">Product Name:</label>
+                <input type="text" id="productName" placeholder="Product Name">
+            </div>
+
+            <div class="form-group">
+                <label for="productBrand">Brand:</label>
+                <input type="text" id="productBrand" placeholder="Product Brand">
+            </div>
+
+            <div class="form-group">
+                <label for="productPrice">Price:</label>
+                <input type="number" id="productPrice" placeholder="Price">
+            </div>
+
+            <div class="form-group">
+                <label for="productDescription">Description:</label>
+                <textarea id="productDescription" placeholder="Short Description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="productAvailability">Availability:</label>
+                <select id="productAvailability">
+                    <option value="available">Available</option>
+                    <option value="out-of-stock">Out of Stock</option>
+                </select>
+            </div>
+
+            <div class="form-group-divider"></div>
+
+            <div class="image-upload-container">
+                <label>Product Image:</label>
+                <div class="image-preview" id="imagePreview">
+                    <img id="previewImg" src="" alt="Preview">
+                </div>
+                <label for="imageUpload" class="file-input-label">Choose New Image</label>
+                <input type="file" id="imageUpload" accept="image/*">
+            </div>
+
+            <button class="save-button" onclick="confirmChanges()">Save Changes</button>
+            <button class="close" onclick="closeModal()">Cancel</button>
+        </div>
+    </div>
+    
 {% endblock %}
