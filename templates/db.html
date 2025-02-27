@@ -1,0 +1,10 @@
+<tbody>
+    {% for user in users %}
+    <tr>
+        <td>{{ user.user_id }}</td>
+        <td>{{ user.user_email }}</td>
+        <td>******</td> <!-- Hide password -->
+        <td>{{ user.user_role }}</td>
+    </tr>
+    {% endfor %}
+</tbody>

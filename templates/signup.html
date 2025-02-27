@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-box">
+        <h2>Sign Up</h2>
+        {% if error %}
+            <div class="error-message">{{ error }}</div>
+        {% endif %}
+        <form action="{{ url_for('login.signup') }}" method="POST">
+            <div class="form-group">
+                <input type="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <div class="form-group">
+                <div class="role-selector">
+                    <button type="button" class="role-btn" data-role="buyer" onclick="selectRole('buyer')">Customer</button>
+                    <button type="button" class="role-btn" data-role="seller" onclick="selectRole('seller')">Seller</button>
+                </div>
+                <input type="hidden" name="role" id="role" value="buyer">
+            </div>
+            <button type="submit" class="auth-button">Sign Up</button>
+        </form>
+        <p class="auth-link">Already have an account? <a href="{{ url_for('login.login') }}">Login</a></p>
+    </div>
+</div>
+
+<script>
+function selectRole(role) {
+    document.querySelectorAll('.role-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    document.querySelector(`[data-role="${role}"]`).classList.add('active');
+    document.getElementById('role').value = role;
+}
+
+// Set initial active state
+document.addEventListener('DOMContentLoaded', () => {
+    selectRole('buyer');
+});
+</script>
+{% endblock %}

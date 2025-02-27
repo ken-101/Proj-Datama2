@@ -7,13 +7,14 @@
     <title>{% block title %}Default Title{% endblock %}</title>
 </head>
 <body>
-    <header>Global Header</header>
-    <h1>home</h1>
-    
-    <form action="/logout" method="POST">
-        <button type="submit">Logout</button>
-    </form>
-    <h1>LOGS</h1>
+    <nav class="navbar">
+        <div class="nav-right">
+            <form action="{{ url_for('login.logout') }}" method="POST" style="display: inline;">
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </div>
+    </nav>
+
     <div class="container">
         {% block content %}{% endblock %}
     </div>
