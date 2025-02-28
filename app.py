@@ -56,6 +56,14 @@ def home():
         print(f"Error: {str(e)}")
         session.clear()
         return render_template("landing.html")
-
+@app.route("/db")
+def db():
+    try:
+        # Fetch products from Supabase
+        products = supabase.table('product').select('*').execute()
+        return render_template("db.html", products=products.data)
+    except Exception as e:
+        print(f"Error fetching products: {str(e)}")
+        return render_template("db.html", products=[])
 if __name__ == '__main__':
     app.run(debug=True)
