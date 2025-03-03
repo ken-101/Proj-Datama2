@@ -2,21 +2,26 @@
 
 {% block name %}
 {% block admin_content %}{% endblock %}
+
 {% if product %}
-    <div class="item" data-product-id="{{ product.p_id }}">
-        <p>Product ID: {{ product.p_id }}</p>
-        <p>Name: {{ product.p_name }}</p>
-        <p>Brand: {{ product.p_brand }}</p>
-        <p>Condition: {{ product.p_condition }}</p>
-        <p>Type: {{ product.p_type }}</p>
-        <p>Quality: {{ product.p_quality }}</p>
-        <p>Quantity: {{ product.p_quantity }}</p>
-        <p>Price: {{ product.p_price }}</p>
-        <p>Material: {{ product.p_material }}</p>
-        <p>Design: {{ product.p_design }}</p>
-        <button onclick="removeProduct(this)" class="delete-btn">Delete</button>
-    </div>
+    {% for product in product %}
+        <div class="item" data-product-id="{{ product.p_id }}">
+            <p>Product ID: {{ product.p_id }}</p>
+            <p>Name: {{ product.p_name }}</p>
+            <p>Brand: {{ product.p_brand }}</p>
+            <p>Condition: {{ product.p_condition }}</p>
+            <p>Type: {{ product.p_type }}</p>
+            <p>Quality: {{ product.p_quality }}</p>
+            <p>Quantity: {{ product.p_quantity }}</p>
+            <p>Price: {{ product.p_price }}</p>
+            <p>Material: {{ product.p_material }}</p>
+            <p>Design: {{ product.p_design }}</p>
+            <button onclick="removeProduct(this)" class="delete-btn">Delete</button>
+            <a href="{{ url_for('seller.update_product', p_id=product.p_id) }}"><button type="button" class="edit-btn">Edit</button></a>
+        </div>
+    {% endfor %}
 {% else %}
     <p>No product found.</p>
 {% endif %}
+
 {% endblock %}
