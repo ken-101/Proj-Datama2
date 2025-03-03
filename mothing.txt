@@ -30,3 +30,62 @@ class User(db.Model):
     @staticmethod
     def check_password(stored_password, provided_password):
         return bcrypt.checkpw(provided_password.encode('utf-8'), stored_password.encode('utf-8'))
+
+
+        customer table
+cust_id
+cust_last_name
+cust_contact_no
+cust_address
+cust_city
+cust_gender
+cust_status
+
+product table
+prod_id
+prod_price
+prod_description
+prod_supplier_id
+prod_quality
+prod_design
+prod_material
+
+supplier table
+supp_id
+supp_last_name
+supp_contact_no
+supp_address
+supp_city
+supp_gender
+supp_status
+
+product
+p_id
+p_name
+p_brand 
+p_condition
+p_type
+p_quality 
+p_quantity
+p_price 
+P_material 
+p_design 
+
+transaction table
+trans_id
+trans_date
+trans_shipping_address
+trans_status
+trans_invoice_number
+cust_id
+prod_id
+
+users table
+user_id
+user_email
+user_password
+user_role
+created_at
+
+
+
