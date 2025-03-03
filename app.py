@@ -68,33 +68,51 @@ def db():
 @app.route('/updateform')
 def update_form():
     return render_template('update.html')
-@app.route('/update', methods=['POST'])
-def update_data():
-    # Get data from the request
+@app.route('/update_product', methods=['POST'])
+def update_product():
     data = request.get_json()
 
-    # Extract the values to update
-    table_name = data.get('table_name')
-    record_id = data.get('id')  # assuming the record has an 'id' field
-    new_data = data.get('new_data')  # New data to update
+    # Extract the values from the request
+    p_id = data.get('p_id')
+    field = data.get('field')
+    new_value = data.get('new_value')
 
-    # Check if the data is provided correctly
-    if not table_name or not record_id or not new_data:
+    # Validate the input data
+    if not p_id or not field or not new_value:
         return jsonify({"error": "Missing required fields"}), 400
 
-    # Perform the update operation in Supabase
-    try:
-        # Update the record in the specified table by ID
-        response = supabase.table(table_name).update(new_data).eq('id', record_id).execute()
+    # Create a dictionary to map the field names to the correct column names
+    field_map = {
+        'p_price': 'p_price',  # Corrected field name
+        'p_name': 'name',
+        'p_brand': 'brand',
+        'p_condition': 'condition',
+        'p_type': 'type',
+        'p_quality': 'quality',
+        'p_quantity': 'quantity',
+        'p_material': 'material',
+        'p_design': 'design'
+    }
 
-        # Check the response for success
-        if response.status_code == 200:
-            return jsonify({"message": "Record updated successfully"}), 200
-        else:
-            return jsonify({"error": "Failed to update record", "details": response.json()}), 500
+    # Check if the field is valid
+    if field not in field_map:
+        return jsonify({"error": "Invalid field selected"}), 400
+
+    # Perform the update in the Supabase table
+    try:
+        # Update the record in the Supabase table by ID
+        response = supabase.table('product').update({field_map[field]: new_value}).eq('p_id', p_id).execute()
+
+        # Check for errors directly in `response.error`
+        if response.error:  # This checks for the error attribute
+            return jsonify({"error": response.error.message}), 500
+        
+        # If the update is successful, return a success message
+        return jsonify({"message": "Product updated successfully"}), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
     
 if __name__ == '__main__':
     app.run(debug=True)
