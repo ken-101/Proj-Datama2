@@ -78,21 +78,43 @@ document.addEventListener("DOMContentLoaded", function () {
     const imageUpload = document.getElementById("imageUpload");
     const previewImg = document.getElementById("previewImg");
 
-    imageUpload.addEventListener("change", function () {
-        const file = this.files[0];
-        if (file) {
-            const reader = new FileReader();
+    if (imageUpload && previewImg) {  // Check if elements exist
+        imageUpload.addEventListener("change", function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
 
-            reader.addEventListener("load", function () {
-                previewImg.src = this.result;
-                selectedImage = this.result;
-            });
+                reader.addEventListener("load", function () {
+                    previewImg.src = this.result;
+                    selectedImage = this.result;
+                });
 
-            reader.readAsDataURL(file);
-        }
-    });
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    // Handle image preview for new product
+    const newImageUpload = document.getElementById("newImageUpload");
+    const newPreviewImg = document.getElementById("newPreviewImg");
+
+    if (newImageUpload && newPreviewImg) {  // Check if elements exist
+        newImageUpload.addEventListener("change", function () {
+            const file = this.files[0];
+            if (file && file.type.startsWith("image/")) {
+                const reader = new FileReader();
+                reader.onload = function () {
+                    newPreviewImg.src = this.result;
+                    selectedImageForNewProduct = this.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert("Please select a valid image file.");
+                this.value = "";
+            }
+        });
+    }
 });
-
 let selectedImageForNewProduct = null;
 
 function openAddProductModal() {
@@ -143,36 +165,51 @@ function addProduct() {
 
     closeAddProductModal();
 }
-
-// Handle image preview for new product
-document.addEventListener("DOMContentLoaded", function () {
-    const newImageUpload = document.getElementById("newImageUpload");
-    const newPreviewImg = document.getElementById("newPreviewImg");
-
-    newImageUpload.addEventListener("change", function () {
-        const file = this.files[0];
-        if (file && file.type.startsWith("image/")) {
-            const reader = new FileReader();
-            reader.onload = function () {
-                newPreviewImg.src = this.result;
-                selectedImageForNewProduct = this.result;
-            };
-            reader.readAsDataURL(file);
-        } else {
-            alert("Please select a valid image file.");
-            this.value = "";
-        }
-    });
-});
 // Remove the duplicate removeProduct function and keep only one
-function removeProduct(button) {
-    const productCard = button.closest(".product-card");
-    const productName = productCard.querySelector("h2").textContent;
+async function removeProduct(button) {
+    const productCard = button.closest(".product-card, .item"); // Works with both layouts
+    let productId;
+    
+    // Handle both card layouts
+    if (productCard.classList.contains("product-card")) {
+        productId = productCard.querySelector(".product-id").textContent.replace("Product ID: ", "");
+    } else {
+        productId = productCard.dataset.productId;
+    }
 
-    // Show confirmation alert
-    const confirmDelete = confirm(`Are you sure you want to remove "${productName}"?`);
+    // Show confirmation alert with product ID
+    const confirmDelete = confirm(`Are you sure you want to delete product (ID: ${productId})?`);
+    
     if (confirmDelete) {
-        productCard.remove();
+        try {
+            // Send DELETE request to server
+            const response = await fetch(`/seller/delete_product/${productId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                // Remove the product from UI
+                productCard.remove();
+                console.log(`Product ID: ${productId} successfully deleted`);
+                
+                // Update product count if it exists
+                const productCountElement = document.querySelector(".product-count");
+                if (productCountElement) {
+                    const currentCount = parseInt(productCountElement.textContent.match(/\d+/)[0]);
+                    productCountElement.textContent = productCountElement.textContent.replace(
+                        /\d+/, (currentCount - 1).toString());
+                }
+            } else {
+                const errorData = await response.json();
+                alert(errorData.message || 'Failed to delete product. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error deleting product:', error);
+            alert('An error occurred while deleting the product. Please try again later.');
+        }
     }
 }
  

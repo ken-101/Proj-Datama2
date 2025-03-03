@@ -1,5 +1,33 @@
 {% extends "buyer.html" %}
 
 {% block seller_content %}
-    <p>Welcome, Buyer! Manage your store here.</p>
+    <p>Welcome, Buyer!</p>
+    
+    {% if error %}
+        <div class="error-message">{{ error }}sss</div>
+    {% endif %}
+
+    {% if message %}
+        <div class="info-message">{{ message }}yyy</div>
+    {% endif %}
+
+    <div class="product-grid">
+        {% for product in product %}
+            <div class="product-card">
+                <h3>{{ product.p_name }}</h3>
+                <div class="product-details">
+                    <p><strong>ID:</strong> {{ product.p_id }}</p>
+                    <p><strong>Brand:</strong> {{ product.p_brand }}</p>
+                    <p><strong>Condition:</strong> {{ product.p_condition }}</p>
+                    <p><strong>Type:</strong> {{ product.p_type }}</p>
+                    <p><strong>Quality:</strong> {{ product.p_quality }}</p>
+                    <p><strong>Quantity:</strong> {{ product.p_quantity }}</p>
+                    <p><strong>Price:</strong> ₱{{ product.p_price }}</p>
+                    <p><strong>Material:</strong> {{ product.p_material }}</p>
+                    <p><strong>Design:</strong> {{ product.p_design }}</p>
+                </div>
+                <button class="buy-button">Buy Now</button>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
