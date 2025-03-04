@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}home{% endblock %}
+{% block content %}
+    <h1>session id {{session.user_id}}</h1>
+    <a class="back" href="{{ url_for('buyer.index') }}"><button type="button" class="edit-btn">Back</button></a>
+    {% if transactions %}
+        <div class="transaction-list">
+            {% for transaction in transactions %}
+                <div class="transaction-item {% if transaction.t_status == 'Processing' %}status-preparing{% elif transaction.t_status == 'Delivered' %}status-delivered{% elif transaction.t_status == 'Cancelled' %}status-cancelled{% endif %}">
+                    <span class="increment">{{ loop.index }}</span>
+                    <span class="transaction-id">Invoice: {{ transaction.t_invoice }}</span>
+                    <span class="transaction-amount">Amount: ₱{{ transaction.t_amount }}</span>
+                    <span class="transaction-date">Date: {{ transaction.t_date }}</span>
+                    <span class="transaction-status">Status: {{ transaction.t_status }}</span>
+                </div>
+            {% endfor %}
+        </div>
+        <style>
+            .transaction-list {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 800px;
+                padding: 20px ;
+                margin: 20px ;
+                
+                background-color:rgb(161, 161, 161);
+            }
+            .transaction-item {
+                display: flex;
+                align-items: center;
+                width: 700px;
+                justify-content: space-between;
+                padding: 15px;
+                margin: 10px 0;
+                border-radius: 5px;
+                background-color: #f8f9fa;
+            }
+            .status-preparing {
+                background-color:rgb(255, 235, 169);
+                border: 5px solid rgb(255, 220, 113);
+            }
+            .status-delivered {
+                background-color:rgb(174, 255, 193);
+                border: 5px solid rgb(108, 255, 142);
+            }
+            .status-cancelled {
+                background-color:rgb(255, 176, 183);
+                border: 5px solid rgb(255, 101, 117);
+            }
+            .transaction-id, .transaction-amount, .transaction-date, .transaction-status {
+                padding: 5px 10px;
+            }
+        </style>
+    {% else %}
+        <p>No transaction history found.</p>
+    {% endif %}
+{% endblock%}

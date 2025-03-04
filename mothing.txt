@@ -72,13 +72,12 @@ P_material
 p_design 
 
 transaction table
-trans_id
-trans_date
-trans_shipping_address
-trans_status
-trans_invoice_number
-cust_id
-prod_id
+t_invoice
+t_id = session[user-id]
+t_type = cod, card, ecash
+t_shipping_address
+t_date
+t_amount = p_price
 
 users table
 user_id

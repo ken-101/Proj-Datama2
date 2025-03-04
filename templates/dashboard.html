@@ -1,0 +1,10 @@
+{% extends 'loggedin.html' %}
+{% block title %}home{% endblock %}
+{% block names %}
+    <div class="container">
+        <a class="" href="{{ url_for('buyer.home') }}"><button type="button" class="edit-btn">Buy Products</button></a>
+        <a href="{{ url_for('buyer.history') }}"><button type="button" class="edit-btn">History</button></a>
+    </div>
+    {% block dashboard %}{% endblock %}
+    <h1>hello sekai </h1>
+{% endblock %}

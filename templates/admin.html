@@ -3,3 +3,9 @@
 {% block title %}Admin{% endblock %}
 
 {% block content %}
+    <div class="container">
+        <a class="" href="{{ url_for('seller.products') }}"><button type="button" class="edit-btn">Seller Products</button></a>
+        <a href="{{ url_for('buyer.history') }}"><button type="button" class="edit-btn">History</button></a>
+    </div>
+
+{% endblock %}

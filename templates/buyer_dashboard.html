@@ -1,32 +1,26 @@
 {% extends "buyer.html" %}
 
 {% block seller_content %}
+    <a class="back" href="{{ url_for('buyer.index') }}"><button type="button" class="edit-btn">Back</button></a>
     <p>Welcome, Buyer!</p>
     
-    {% if error %}
-        <div class="error-message">{{ error }}sss</div>
-    {% endif %}
-
-    {% if message %}
-        <div class="info-message">{{ message }}yyy</div>
-    {% endif %}
-
     <div class="product-grid">
-        {% for product in product %}
+        {% for item in products %}
             <div class="product-card">
-                <h3>{{ product.p_name }}</h3>
+                <h3>{{ item.p_name }}none</h3>
                 <div class="product-details">
-                    <p><strong>ID:</strong> {{ product.p_id }}</p>
-                    <p><strong>Brand:</strong> {{ product.p_brand }}</p>
-                    <p><strong>Condition:</strong> {{ product.p_condition }}</p>
-                    <p><strong>Type:</strong> {{ product.p_type }}</p>
-                    <p><strong>Quality:</strong> {{ product.p_quality }}</p>
-                    <p><strong>Quantity:</strong> {{ product.p_quantity }}</p>
-                    <p><strong>Price:</strong> ₱{{ product.p_price }}</p>
-                    <p><strong>Material:</strong> {{ product.p_material }}</p>
-                    <p><strong>Design:</strong> {{ product.p_design }}</p>
+                    <p><strong>ID:</strong> {{ item.p_id }}</p>
+                    <p><strong>Brand:</strong> {{ item.p_brand }}</p>
+                    <p><strong>Condition:</strong> {{ item.p_condition }}</p>
+                    <p><strong>Type:</strong> {{ item.p_type }}</p>
+                    <p><strong>Quality:</strong> {{ item.p_quality }}</p>
+                    <p><strong>Quantity:</strong> {{ item.p_quantity }}</p>
+                    <p><strong>Price:</strong> ₱{{ item.p_price }}</p>
+                    <p><strong>Material:</strong> {{ item.p_material }}</p>
+                    <p><strong>Design:</strong> {{ item.p_design }}</p>
+                    <a href="{{ url_for('buyer.order_1', product_id=item.p_id) }}" class="buy-button">Buy Now</a>
                 </div>
-                <button class="buy-button">Buy Now</button>
+                
             </div>
         {% endfor %}
     </div>

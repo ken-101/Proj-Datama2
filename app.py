@@ -37,16 +37,16 @@ def home():
     
     try:
         # Get user data from Supabase
-        user = supabase.table('users').select('*').eq('user_id', session['user_id']).execute()
+        user = supabase.table('customer').select('*').eq('c_id', session['user_id']).execute()
         if not user.data:
             session.clear()
             return redirect(url_for("auth.login"))
             
-        user_role = user.data[0]['user_role']
+        user_role = user.data[0]['c_role']
         
         # Redirect based on role
         if user_role == 'buyer':
-            return redirect(url_for('buyer.home'))
+            return redirect(url_for('buyer.index'))
         elif user_role == 'seller':
             return redirect(url_for('seller.home'))
         else:

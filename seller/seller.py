@@ -5,21 +5,12 @@ seller = Blueprint("seller", __name__, static_folder="static", template_folder="
 @seller.route("/", methods=["GET", "POST"])
 @seller.route("/home", methods=["GET", "POST"])
 def home():
-    try:
-        products = current_app.supabase.table('product').select('*').execute()
-        
-        if not products.data:
-            print("Product not found in the database")
-            return render_template("seller.html", products=None)
-           
-        print("Successfully fetched product")
-        return render_template("seller.html", product=products.data)  # Pass single product
-    except Exception as e:
-        print(f"Error fetching product: {str(e)}")
-        # Log the full error for debugging
-        import traceback
-        print(traceback.format_exc())
-        return render_template("seller.html", product=None)
+    return render_template("admin.html")
+    
+@seller.route("/products", methods=["GET", "POST"])
+def products():
+    products = current_app.supabase.table('product').select('*').execute()
+    return render_template("seller.html", product=products.data)
 
 @seller.route("/delete_product/<product_id>", methods=["DELETE"])
 def delete_product(product_id):

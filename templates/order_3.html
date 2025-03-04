@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Order Confirmation{% endblock %}
+{% block content %}
+<div class="confirmation-container">
+    <div class="confirmation-box">
+        <h2>Order Placed Successfully!</h2>
+        <div class="confirmation-details">
+            <p>Your order has been successfully placed. Thank you for shopping with us!</p>
+            <p><strong>Invoice Number:</strong> {{ invoice_number }}</p>
+            <p><strong>Total Amount:</strong> ₱{{ total_amount }}</p>
+            <p>A confirmation email will be sent to your registered email address.</p>
+        </div>
+        <a href="{{ url_for('buyer.home') }}" class="back-btn">Back to Shopping</a>
+    </div>
+</div>
+
+<style>
+.confirmation-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.confirmation-box {
+    max-width: 600px;
+    width: 100%;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.confirmation-details {
+    margin: 2rem 0;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    text-align: left;
+}
+
+.back-btn {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.back-btn:hover {
+    background-color: #45a049;
+}
+</style>
+{% endblock %}

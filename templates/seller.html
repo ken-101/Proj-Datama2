@@ -3,25 +3,38 @@
 {% block name %}
 {% block admin_content %}{% endblock %}
 
-{% if product %}
-    {% for product in product %}
-        <div class="item" data-product-id="{{ product.p_id }}">
-            <p>Product ID: {{ product.p_id }}</p>
-            <p>Name: {{ product.p_name }}</p>
-            <p>Brand: {{ product.p_brand }}</p>
-            <p>Condition: {{ product.p_condition }}</p>
-            <p>Type: {{ product.p_type }}</p>
-            <p>Quality: {{ product.p_quality }}</p>
-            <p>Quantity: {{ product.p_quantity }}</p>
-            <p>Price: {{ product.p_price }}</p>
-            <p>Material: {{ product.p_material }}</p>
-            <p>Design: {{ product.p_design }}</p>
-            <button onclick="removeProduct(this)" class="delete-btn">Delete</button>
-            <a href="{{ url_for('seller.update_product', p_id=product.p_id) }}"><button type="button" class="edit-btn">Edit</button></a>
-        </div>
-    {% endfor %}
-{% else %}
-    <p>No product found.</p>
-{% endif %}
+<div class="container">
+    <h1>Seller Dashboard</h1>
+    <div class="product-grid">
+        {% if product %}
+            {% for product in product %}
+                <div class="product-card" data-product-id="{{ product.p_id }}">
+                    <div class="product-details">
+                        <p class="product-id">ID: {{ product.p_id }}</p>
+                        <h2>{{ product.p_name }}</h2>
+                        <p class="brand">{{ product.p_brand }}</p>
+                        <div class="product-info">
+                            <p>Condition: {{ product.p_condition }}</p>
+                            <p><strong>Type:</strong> {{ product.p_type }}</p>
+                            <p><strong>Quality:</strong> {{ product.p_quality }}</p>
+                            <p><strong>Quantity:</strong> {{ product.p_quantity }}</p>
+                            <p class="price">₱{{ product.p_price }}</p>
+                            <p><strong>Material:</strong> {{ product.p_material }}</p>
+                            <p><strong>Design:</strong> {{ product.p_design }}</p>
+                        </div>
+                        <div class="button-container">
+                            <button onclick="removeProduct(this)" class="delete-btn">Delete</button>
+                            <a href="{{ url_for('seller.update_product', p_id=product.p_id) }}">
+                                <button type="button" class="edit-btn">Edit</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-products">No product found.</p>
+        {% endif %}
+    </div>
+</div>
 
 {% endblock %}

@@ -15,7 +15,7 @@ def login():
             
         try:
             # Query user from Supabase
-            user = current_app.supabase.table('users').select('*').eq('user_email', email).execute()
+            user = current_app.supabase.table('customer').select('*').eq('c_email', email).execute()
             
             if not user.data:
                 return render_template("login.html", error="Invalid email or password")
@@ -23,14 +23,14 @@ def login():
             user_data = user.data[0]
             
             # Verify password
-            stored_password = user_data.get('user_password')
-            if not stored_password or not check_password_hash(stored_password, password):
+            stored_password = user_data.get('c_password')
+            if not stored_password:
                 return render_template("login.html", error="Invalid email or password")
                 
             # Set session data
-            session['user_id'] = user_data['user_id']
-            session['email'] = user_data['user_email']
-            session['role'] = user_data['user_role']
+            session['user_id'] = user_data['c_id']
+            session['email'] = user_data['c_email']
+            session['role'] = user_data['c_role']
             
             return redirect(url_for('home'))
             
@@ -57,18 +57,16 @@ def signup():
             
         try:
             # Check if user already exists
-            existing_user = current_app.supabase.table('users').select('*').eq('user_email', email).execute()
+            existing_user = current_app.supabase.table('customer').select('*').eq('c_email', email).execute()
             if existing_user.data:
                 return render_template("signup.html", error="Email already registered")
-                
-            # Hash password
-            hashed_password = generate_password_hash(password)
+        
             
             # Insert new user
-            new_user = current_app.supabase.table('users').insert({
-                'user_email': email,
-                'user_password': hashed_password,
-                'user_role': role
+            new_user = current_app.supabase.table('customer').insert({
+                'c_email': email,
+                'c_password': password,
+                'c_role': role
             }).execute()
             
             if new_user.data:
