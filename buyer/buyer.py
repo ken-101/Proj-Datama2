@@ -83,3 +83,47 @@ def process_order_2():
     except Exception as e:
         print(f"Error processing order step 2: {str(e)}")
         return redirect(url_for('buyer.home'))
+
+@buyer.route("/update_user", methods=["GET", "POST"])
+def update_user():
+    try:
+        if request.method == "POST":
+            # Get form data
+            password = request.form.get('c_password')
+            address = request.form.get('c_address')
+            city = request.form.get('c_city')
+            contact = request.form.get('c_contact')
+            gender = request.form.get('c_gender')
+            status = request.form.get('c_status')
+            role = request.form.get('c_role')
+            
+            # Update user data in the database
+            user_data = {}
+            if password:
+                user_data['c_password'] = password
+            if address:
+                user_data['c_address'] = address
+            if city:
+                user_data['c_city'] = city
+            if contact:
+                user_data['c_contact'] = contact
+            if gender:
+                user_data['c_gender'] = gender
+            if status:
+                user_data['c_status'] = status
+            if role:
+                user_data['c_role'] = role
+            
+            if user_data:
+                current_app.supabase.table('customer').update(user_data).eq('c_id', session['user_id']).execute()
+                return render_template("update_user.html", success="Profile updated successfully", user=user_data)
+            else:
+                return render_template("update_user.html", error="No data provided for update")
+        
+        # GET request - fetch current user data
+        user = current_app.supabase.table('customer').select('*').eq('c_id', session['user_id']).execute().data[0]
+        return render_template("update_user.html", user=user)
+    
+    except Exception as e:
+        print(f"Error updating user profile: {str(e)}")
+        return render_template("update_user.html", error="Failed to update profile")

@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}Seller History{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Transaction History</h1>
+        <a href="{{ url_for('seller.home') }}"><button type="button" class="back-btn">Back</button></a>
+        
+        {% if transactions %}
+            <div class="status-sections">
+                <div class="status-section processing-section">
+                    <h2>Processing Orders</h2>
+                    <div class="transaction-list">
+                        {% for transaction in transactions %}
+                            {% if transaction.t_status == 'Processing' %}
+                                <div class="transaction-item status-processing">
+                                    <div class="transaction-details">
+                                        <span class="transaction-id">Invoice: {{ transaction.t_invoice }}</span>
+                                        <span class="transaction-type">Type: {{ transaction.t_type }}</span>
+                                        <span class="transaction-amount">Amount: ₱{{ transaction.t_amount }}</span>
+                                        <span class="transaction-date">Date: {{ transaction.t_date }}</span>
+                                        <span class="transaction-address">Shipping Address: {{ transaction.t_shipping_address }}</span>
+                                        <form class="status-form" action="{{ url_for('seller.update_status', t_invoice=transaction.t_invoice) }}" method="POST">
+                                            <select name="status" class="status-select">
+                                                <option value="Processing" {% if transaction.t_status == 'Processing' %}selected{% endif %}>Processing</option>
+                                                <option value="Delivered" {% if transaction.t_status == 'Delivered' %}selected{% endif %}>Delivered</option>
+                                                <option value="Cancelled" {% if transaction.t_status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                                            </select>
+                                            <button type="submit" class="save-btn">Save</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="status-section delivered-section">
+                    <h2>Delivered Orders</h2>
+                    <div class="transaction-list">
+                        {% for transaction in transactions %}
+                            {% if transaction.t_status == 'Delivered' %}
+                                <div class="transaction-item status-delivered">
+                                    <div class="transaction-details">
+                                        <span class="transaction-id">Invoice: {{ transaction.t_invoice }}</span>
+                                        <span class="transaction-type">Type: {{ transaction.t_type }}</span>
+                                        <span class="transaction-amount">Amount: ₱{{ transaction.t_amount }}</span>
+                                        <span class="transaction-date">Date: {{ transaction.t_date }}</span>
+                                        <span class="transaction-address">Shipping Address: {{ transaction.t_shipping_address }}</span>
+                                        <form class="status-form" action="{{ url_for('seller.update_status', t_invoice=transaction.t_invoice) }}" method="POST">
+                                            <select name="status" class="status-select">
+                                                <option value="Processing" {% if transaction.t_status == 'Processing' %}selected{% endif %}>Processing</option>
+                                                <option value="Delivered" {% if transaction.t_status == 'Delivered' %}selected{% endif %}>Delivered</option>
+                                                <option value="Cancelled" {% if transaction.t_status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                                            </select>
+                                            <button type="submit" class="save-btn">Save</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="status-section cancelled-section">
+                    <h2>Cancelled Orders</h2>
+                    <div class="transaction-list">
+                        {% for transaction in transactions %}
+                            {% if transaction.t_status == 'Cancelled' %}
+                                <div class="transaction-item status-cancelled">
+                                    <div class="transaction-details">
+                                        <span class="transaction-id">Invoice: {{ transaction.t_invoice }}</span>
+                                        <span class="transaction-type">Type: {{ transaction.t_type }}</span>
+                                        <span class="transaction-amount">Amount: ₱{{ transaction.t_amount }}</span>
+                                        <span class="transaction-date">Date: {{ transaction.t_date }}</span>
+                                        <span class="transaction-address">Shipping Address: {{ transaction.t_shipping_address }}</span>
+                                        <form class="status-form" action="{{ url_for('seller.update_status', t_invoice=transaction.t_invoice) }}" method="POST">
+                                            <select name="status" class="status-select">
+                                                <option value="Processing" {% if transaction.t_status == 'Processing' %}selected{% endif %}>Processing</option>
+                                                <option value="Delivered" {% if transaction.t_status == 'Delivered' %}selected{% endif %}>Delivered</option>
+                                                <option value="Cancelled" {% if transaction.t_status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                                            </select>
+                                            <button type="submit" class="save-btn">Save</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p class="no-transactions">No transactions found.</p>
+        {% endif %}
+    </div>
+
+    <style>
+        .status-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            padding: 20px;
+        }
+        .status-section {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .status-section h2 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 1.5em;
+        }
+        .transaction-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .transaction-item {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .transaction-details {
+            display: grid;
+            gap: 10px;
+        }
+        .status-form {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .status-select {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .save-btn {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .save-btn:hover {
+            background-color: #45a049;
+        }
+        .status-processing { border-left: 4px solid #ffd700; }
+        .status-delivered { border-left: 4px solid #4CAF50; }
+        .status-cancelled { border-left: 4px solid #f44336; }
+    </style>
+{% endblock %}

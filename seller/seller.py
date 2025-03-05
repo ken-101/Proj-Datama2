@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, current_app, jsonify, request
+from flask import Blueprint, render_template, current_app, jsonify, request, redirect, url_for
  
 seller = Blueprint("seller", __name__, static_folder="static", template_folder="templates")
  
@@ -6,6 +6,34 @@ seller = Blueprint("seller", __name__, static_folder="static", template_folder="
 @seller.route("/home", methods=["GET", "POST"])
 def home():
     return render_template("admin.html")
+
+@seller.route("/history")
+def history():
+    try:
+        transactions = current_app.supabase.table('transaction').select('*').order('t_status', desc=True).execute()
+        return render_template("seller_history.html", transactions=transactions.data)
+    except Exception as e:
+        print(f"Error fetching transactions: {str(e)}")
+        return render_template("seller_history.html", transactions=None)
+
+@seller.route("/update_status/<t_invoice>", methods=["POST"])
+def update_status(t_invoice):
+    try:
+        new_status = request.form.get("status")
+        if not new_status:
+            return redirect(url_for('seller.history'))
+
+        result = current_app.supabase.table('transaction').update({"t_status": new_status}).eq('t_invoice', t_invoice).execute()
+        
+        if result.data:
+            print(f"Successfully updated status for invoice {t_invoice} to {new_status}")
+        else:
+            print(f"Failed to update status for invoice {t_invoice}")
+            
+    except Exception as e:
+        print(f"Error updating transaction status: {str(e)}")
+        
+    return redirect(url_for('seller.history'))
     
 @seller.route("/products", methods=["GET", "POST"])
 def products():
