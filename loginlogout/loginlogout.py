@@ -22,10 +22,9 @@ def login():
                 
             user_data = user.data[0]
             
-            # Compare email to password
-            if user_data.get('c_email') != password:
-                return render_template("login.html", error="Kahit ano")
-
+            # Verify password
+            if user_data.get('c_password') != password:
+                return render_template("login.html", error="Invalid email or password")
 
                 
             # Set session data
