@@ -82,7 +82,6 @@ def delete_product(product_id):
 def update_product(p_id):
     if request.method == "POST":
         # Get the form data
-        new_p_id = request.form.get("p_id")
         p_name = request.form.get("p_name")
         p_brand = request.form.get("p_brand")
         p_condition = request.form.get("p_condition")
@@ -95,8 +94,6 @@ def update_product(p_id):
 
         # Build a dictionary of fields to update. Only include those that have values.
         update_data = {}
-        if new_p_id:
-            update_data["p_id"] = new_p_id
         if p_name:
             update_data["p_name"] = p_name
         if p_brand:

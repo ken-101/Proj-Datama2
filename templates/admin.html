@@ -1,11 +1,74 @@
 {% extends "base.html" %}
-
 {% block title %}Admin{% endblock %}
 
 {% block content %}
-    <div class="container">
-        <a class="" href="{{ url_for('seller.products') }}"><button type="button" class="edit-btn">Seller Products</button></a>
-        <a href="{{ url_for('seller.history') }}"><button type="button" class="edit-btn">History</button></a>
-    </div>
+<style>
+    /* Greeting Text */
+    .admin-greeting {
+        font-size: 90px;
+        margin: 20px;
+        text-align: center;
+        color: #000000;
+        font-family: Arial, sans-serif;
+    }
 
+    /* Container Styling (Renamed from 'buyer-container' to 'admin-container') */
+    .admin-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    /* Panel Styling (Renamed from '.btn' to '.admin-panel') */
+    .admin-panel {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 350px;
+        height: 500px;
+        background-color: #72C7D6; /* Change button color */
+        color: rgb(0, 0, 0);
+        font-family: 'Arial', sans-serif; /* Change font */
+        font-size: 90px; /* Large text size (as per Code 2) */
+        font-weight: bold;
+        text-decoration: none;
+        border-radius: 15px;
+        transition: 0.3s;
+    }
+
+    /* Hover Effect */
+    .admin-panel:hover {
+        background-color: #FFD447; /* Hover color */
+    }
+
+    /* Icon Styling */
+    .admin-panel img {
+        width: 95px;
+        height: 95px;
+        margin-bottom: 10px;
+        transition: 0.3s ease-in-out;
+    }
+</style>
+
+<h1 class="admin-greeting">HELLO ADMIN!</h1>
+
+<div class="admin-container">
+    <!-- Panel 1: Seller Products -->
+    <a href="{{ url_for('seller.products') }}" class="admin-panel">
+        <!-- Update the icon path as needed -->
+        <img src="{{ url_for('static', filename='imgs/seller.png') }}" alt="Seller Products Icon">
+        <!-- Override the large 90px font for text -->
+        <span style="font-size: 24px;">Seller Products</span>
+    </a>
+
+    <!-- Panel 2: History -->
+    <a href="{{ url_for('seller.history') }}" class="admin-panel">
+        <!-- Update the icon path as needed -->
+        <img src="{{ url_for('static', filename='imgs/delivery.png') }}" alt="History Icon">
+        <!-- Override the large 90px font for text -->
+        <span style="font-size: 24px;">History</span>
+    </a>
+</div>
 {% endblock %}
