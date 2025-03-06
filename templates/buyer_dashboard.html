@@ -7,7 +7,7 @@
     <div class="product-grid">
         {% for item in products %}
             <div class="product-card">
-                <h3>{{ item.p_name }}none</h3>
+                <h3>{{ item.p_name }}</h3>
                 <div class="product-details">
                     <p><strong>ID:</strong> {{ item.p_id }}</p>
                     <p><strong>Brand:</strong> {{ item.p_brand }}</p>
@@ -24,4 +24,5 @@
             </div>
         {% endfor %}
     </div>
+   
 {% endblock %}

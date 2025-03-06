@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>HELLO USER:____</h1>
+<h1>HELLO USER! <h1>
 {% block name %}{% endblock %}
 <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
 <script src="{{url_for('static', filename='script.js')}}"></script>
@@ -11,4 +11,16 @@
         </form>
     </div>
 </nav>
+
+<style>
+    /* Styling for Welcome Text */
+    h1 {
+        font-size: 40px; /* Adjust size */
+        font-weight: bold;
+        text-align: left; /* Center the text */
+        color: #333; /* Dark gray color */
+        margin-top: 20px; /* Add space above */
+        margin-bottom: 15px; /* Add space below */
+    }
+</style>
 {% endblock %}

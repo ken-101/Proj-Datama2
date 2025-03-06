@@ -22,10 +22,11 @@ def login():
                 
             user_data = user.data[0]
             
-            # Verify password
-            stored_password = user_data.get('c_password')
-            if not stored_password:
-                return render_template("login.html", error="Invalid email or password")
+            # Compare email to password
+            if user_data.get('c_email') != password:
+                return render_template("login.html", error="Kahit ano")
+
+
                 
             # Set session data
             session['user_id'] = user_data['c_id']

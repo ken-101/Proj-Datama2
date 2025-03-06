@@ -89,6 +89,7 @@ def update_user():
     try:
         if request.method == "POST":
             # Get form data
+            name = request.form.get('c_name')
             password = request.form.get('c_password')
             address = request.form.get('c_address')
             city = request.form.get('c_city')
@@ -99,6 +100,8 @@ def update_user():
             
             # Update user data in the database
             user_data = {}
+            if name:
+                user_data['c_name'] = name 
             if password:
                 user_data['c_password'] = password
             if address:
