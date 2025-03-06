@@ -33,10 +33,11 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
-    
+    font-family: Arial, sans-serif;
 }
 
 .error-message {
+    width: 95%;
     color: #dc3545;
     background-color: #f8d7da;
     padding: 0.75rem;
@@ -50,7 +51,7 @@ body {
 }
 
 input {
-    width: 100%;
+    width: 95%;
     padding: 0.75rem;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -64,11 +65,12 @@ input:focus {
 }
 
 .auth-button {
-    width: 100%;
+    width: 101%;
     padding: 0.75rem;
     background-color: #00bfa5;
     color: white;
     border: none;
+    font-weight: bold;
     border-radius: 4px;
     font-size: 1rem;
     cursor: pointer;
@@ -103,20 +105,29 @@ input:focus {
 
 .role-btn {
     flex: 1;
-    padding: 0.75rem;
+    padding: 0.80rem;
     border: 2px solid #ddd;
-    border-radius: 4px;
+    border-radius: 2px;
     background: white;
     color: #666;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.role-btn.active {
-    border-color: #00bfa5;
-    background: #00bfa5;
+/* Customer (Buyer) Button */
+.role-btn[data-role="buyer"].active {
+    border-color: #FFD447; /* Teal */
+    background: #FFD447;
     color: white;
 }
+
+/* Seller Button */
+.role-btn[data-role="seller"].active {
+    border-color: #1BA4BC; /* Orange */
+    background: #1BA4BC;
+    color: white;
+}
+
 
 /* Landing Page Styles */
 .landing-container {
@@ -124,16 +135,17 @@ input:focus {
     padding: 4rem 2rem;
     max-width: 800px;
     margin: 0 auto;
+    font-family: Arial, sans-serif;
 }
 
 .landing-container h1 {
-    font-size: 2.5rem;
+    font-size: 85px;
     margin-bottom: 1rem;
     color: #333;
 }
 
 .landing-container p {
-    font-size: 1.2rem;
+    font-size: 2.5rem;
     color: #666;
     margin-bottom: 2rem;
 }
@@ -155,6 +167,7 @@ input:focus {
 .login-btn {
     background-color: #00bfa5;
     color: white;
+    font-weight: bold;
 }
 
 .login-btn:hover {
@@ -164,6 +177,7 @@ input:focus {
 .signup-btn {
     background-color: #ffd54f;
     color: #333;
+    font-weight: bold;
 }
 
 .signup-btn:hover {

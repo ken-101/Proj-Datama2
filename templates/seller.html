@@ -37,4 +37,107 @@
     </div>
 </div>
 
+<style>
+    .container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.product-card {
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out;
+    display: flex;
+    flex-direction: left;
+    align-items: left;
+    text-align: left;
+}
+
+.product-card:hover {
+    transform: scale(1.05);
+}
+
+.product-id {
+    font-size: 12px;
+    font-weight: bold;
+    color: #555;
+    align-self: flex-start;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+    padding-top: 15px;
+}
+
+.brand {
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.product-info p {
+    font-size: 14px;
+    margin: 4px 0;
+    font-weight: bold;
+}
+
+.price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #e53935;
+    margin-top: 8px;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.delete-btn, .edit-btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+    margin-top: 50px;
+}
+
+.delete-btn {
+    background-color: #e74c3c;
+    color: white;
+    font-weight: bold;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+}
+
+.edit-btn {
+    background-color: #3498db;
+    color: white;
+    font-weight: bold;
+}
+
+.edit-btn:hover {
+    background-color: #2980b9;
+}
+
+.no-products {
+    text-align: center;
+    font-size: 18px;
+    color: #777;
+}
+
+
+</style>
 {% endblock %}
