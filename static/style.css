@@ -28,7 +28,6 @@ body {
     justify-content: center;
     width: 300px;
     height: 500px;
-    background-color: #68ff89;
     padding: 10px 20px;
     border-radius: 20px;
     color: #333;
@@ -75,14 +74,14 @@ body {
 
 /* Product Card Styling */
 .product-card {
-    background: white;
+    background: #FFD447;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    padding: 25px;
     position: relative;
     transition: transform 0.2s ease;
     width: 200px;
-    height: 340px;
+    height: 400px;
 }
 
 .product-card:hover {
@@ -153,6 +152,27 @@ body {
     margin: 10px 0;
     line-height: 1.4;
 }
+
+/* Buy Now Button Styling */
+.buy-button {
+    display: block;
+    text-align: center;
+    background-color: #0056b3; /* Blue color */
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background 0.3s ease, transform 0.2s ease;
+    margin-top: 15px;
+}
+
+.buy-button:hover {
+    background-color: #0F77E9; /* Darker blue on hover */
+    transform: scale(1.05); /* Slight scaling effect */
+}
+
 /* Button Styling */
 .button-container {
     margin-top: 20px;

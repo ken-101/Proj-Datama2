@@ -1,9 +1,60 @@
 {% extends 'loggedin.html' %}
-{% block title %}home{% endblock %}
+{% block title %}Home{% endblock %}
 {% block name %}
+    <style>
+        /* Container Styling */
+        .buyer-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        /* Button Styling */
+        .btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 200px;
+            height: 200px;
+            background-color: #72C7D6; /* Change button color */
+            color: white;
+            font-family: 'Arial', sans-serif; /* Change font */
+            font-size: 90px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 15px;
+            transition: 0.3s;
+        }
+
+        /* Button Hover Effect */
+        .btn:hover {
+            background-color: #fab774;
+        }
+
+        /* Icon Styling */
+        .btn img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 10px;
+            transition: 0.3s ease-in-out;
+        }
+
+    </style>
+
     <div class="buyer-container">
-        <a class="prod btn" href="{{ url_for('buyer.home') }}">Buy Products</a>
-        <a class="buy btn" href="{{ url_for('buyer.history') }}">History</a>
-        <a class="buy btn" href="{{ url_for('buyer.update_user') }}">Update Profile</a>
+        <a class="btn" href="{{ url_for('buyer.home') }}">
+            <img src="{{ url_for('static', filename='imgs/shop.png') }}" alt="Shop Icon">
+            Buy Products
+        </a>
+        <a class="btn" href="{{ url_for('buyer.history') }}">
+            <img src="{{ url_for('static', filename='imgs/history.png') }}" alt="History Icon">
+            History
+        </a>
+        <a class="btn" href="{{ url_for('buyer.update_user') }}">
+            <img src="{{ url_for('static', filename='imgs/profile.png') }}" alt="Profile Icon">
+            Update Profile
+        </a>
     </div>
 {% endblock %}
