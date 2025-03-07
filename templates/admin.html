@@ -50,6 +50,19 @@
         margin-bottom: 10px;
         transition: 0.3s ease-in-out;
     }
+    .back{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+   }
+   .back form{
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    text-align: right;
+    margin: 10px;
+   }
 </style>
 
 <h1 class="admin-greeting">HELLO ADMIN!</h1>
@@ -70,5 +83,11 @@
         <!-- Override the large 90px font for text -->
         <span style="font-size: 24px;">History</span>
     </a>
+    
+</div>
+<div class="back">
+    <form action="{{ url_for('auth.logout') }}" method="POST" style="display: inline;">
+        <button type="submit" class="logout-btn">Logout</button>
+    </form>
 </div>
 {% endblock %}

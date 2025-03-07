@@ -11,8 +11,7 @@
             {% for product in product %}
                 <div class="product-card" data-product-id="{{ product.p_id }}">
                     <div class="product-details">
-                        <p class="product-id">ID: {{ product.p_id }}</p>
-                        <h2>{{ product.p_name }}</h2>
+                        <c>{{ product.p_name }}</c>
                         <p class="brand">{{ product.p_brand }}</p>
                         <div class="product-info">
                             <p>Condition: {{ product.p_condition }}</p>
@@ -75,7 +74,6 @@
 h2 {
     font-size: 24px;
     font-weight: bold;
-    padding-top: 15px;
 }
 
 .brand {

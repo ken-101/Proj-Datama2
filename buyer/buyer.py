@@ -21,7 +21,7 @@ def home():
 @buyer.route("/history", methods=["GET", "POST"])
 def history():
     try:
-        transactions = current_app.supabase.table ('transaction').select('*').eq('t_id', session['user_id']).order('t_date', desc=True).execute()
+        transactions = current_app.supabase.table ('transaction').select('*').eq('c_id', session['user_id']).order('t_date', desc=True).execute()
         return render_template("history.html", transactions=transactions.data)
     except Exception as e:
         print(f"Error fetching transactions: {str(e)}")
@@ -43,6 +43,15 @@ def process_order_1():
     
     try:
         product = current_app.supabase.table('product').select('*').eq('p_id', product_id).execute().data[0]
+        
+        # Check if requested quantity is available
+        if quantity > product['p_quantity']:
+            return redirect(url_for('buyer.order_1', product_id=product_id))
+            
+        # Update product quantity
+        new_quantity = product['p_quantity'] - quantity
+        current_app.supabase.table('product').update({'p_quantity': new_quantity}).eq('p_id', product_id).execute()
+        
         total_amount = quantity * product['p_price']
         return render_template("order_2form.html", product=product, quantity=quantity, total_amount=total_amount)
     except Exception as e:
